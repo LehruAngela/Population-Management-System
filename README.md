@@ -1,4 +1,4 @@
-# SMS-Management-API
+# Population Management System
 This is an API written in NodeJS, Express.js framework using MongoDB as the data store. The endpoints mentioned below allow a user to signup to create an account and login to aceess the features/functionality of the system.
 
 ## Features
