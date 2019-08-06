@@ -13,7 +13,7 @@ export default class Auth {
     if (token) {
       jwt.verify(token, process.env.SECRET, (error, decoded) => {
         if (error) return next(error);
-        Contact.findOne({ phoneNumber: decoded.id }, (error, user) => {
+        User.findOne({ password: decoded.id }, (error, user) => {
           if (!user) {
             return res.status(404).jsend.error({
               message: 'User not found',

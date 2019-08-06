@@ -19,23 +19,23 @@ router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 
 /**
- * Endpoint to send an SMS
+ * Endpoint to create a location
  */
-router.post('/:sender/sendSMS', auth.verifyToken, locationController.createLocation);
+router.post('/createLocation', auth.verifyToken, locationController.createLocation);
 
 /**
- * Endpoint to get details of an SMS
+ * Endpoint to get all available locations
  */
-router.get('/:smsId/getSMS', auth.verifyToken, locationController.getLocations);
+router.get('/getLocations', auth.verifyToken, locationController.getLocations);
 
 /**
- * Endpoint to get details of a contact
+ * Endpoint to update data of a location
  */
-router.get('/getContact', auth.verifyToken, locationController.updateLocation);
+router.put('/:locationId/updateLocation', auth.verifyToken, locationController.updateLocation);
 
 /**
- * Endpoint to delete a contact
+ * Endpoint to delete a location
  */
-router.delete('/:name/deleteContact', auth.verifyToken, locationController.deleteLocation);
+router.delete('/:locationId/deleteLocation', auth.verifyToken, locationController.deleteLocation);
 
 export default router;

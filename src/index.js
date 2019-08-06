@@ -18,7 +18,7 @@ app.use(jsend.middleware);
 /**
  * Register the routes
  */
-app.use('/', routes);
+app.use('/api/v1', routes);
 
 app.listen(8001, () => {
   console.log('Population Management System listening on port: http://localhost:8001');

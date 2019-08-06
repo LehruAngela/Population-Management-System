@@ -6,51 +6,54 @@ const auth = new Auth();
 
 export default class UserController {
   async signup(req, res) {
-    const { body: { name, male, female } } = req;
+    const { body: { username, email, password } } = req;
 
     // check if contact already exists in the database
-    const contact = await Contact.findOne({ phoneNumber: phoneNumber })
-    if (contact) {
+    const user = await User.findOne({ email: email })
+    if (user) {
       return res.status(201).jsend.success({
-        message: 'Phone number already exists, please login instead',
+        message: 'Email used already exists, please login instead',
       });
     }
 
     // generate Jwt Token for new user
-    const token = auth.generateToken(phoneNumber);
+    const token = auth.generateToken(password);
 
     // create Contact record in collection
-    await Contact.create({
-      name: name,
-      phoneNumber: phoneNumber,
+    await User.create({
+      username: username,
+      email: email,
       password: password,
     });
-    
+
     // return success response
     return res.status(201).jsend.success({
-      message: 'Successfully created contact',
-      name: name,
-      phoneNumber: phoneNumber,
-      token: token,
+      message: 'Successfully created account',
+      token: token
     });
   }
 
   async login(req, res) {
-    const { body: { phoneNumber, password } } = req;
+    const { body: { email, password } } = req;
 
     // verify user's password and generate Jwt token
-    const contact = await Contact.findOne({ phoneNumber: phoneNumber })
-    if (contact.password === password) {
-      const token = auth.generateToken(phoneNumber);
+    const user = await User.findOne({ email: email })
+    if (!user) {
+      return res.status(404).jsend.error({
+        message: 'Account does not exist, please try again or sign up',
+      });
+    }
+    if (user.password === password) {
+      const token = auth.generateToken(password);
       return res.status(200).jsend.success({
-        message: 'Successfully logged in, you can now send messages',
+        message: 'Successfully logged in',
         token: token
       });
     }
 
     // return error message if password is wrong
     return res.status(401).jsend.success({
-        message: 'Wrong credentials, please try again or signup to create an account',
+      message: 'Wrong credentials, please try again or signup to create an account',
     });
   }
 }

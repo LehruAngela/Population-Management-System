@@ -4,20 +4,18 @@ import mongoose from 'mongoose';
  * Schema for the Location collection
  */
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
   },
-  male: { 
-    type: Number,
-  },
-  female: {
-    type: Number,
-  },
-  total: {
-    type: Number,
+  email: { 
+    type: String,
     required: true,
-  }
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 const User = mongoose.model('User', UserSchema);

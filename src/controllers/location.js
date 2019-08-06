@@ -10,18 +10,19 @@ export default class LocationController {
     const { body: { name, male, female } } = req;
 
     // check if location already exists in the database
-    const location = await Contact.findOne({ name: name })
+    const location = await Locations.findOne({ name: name })
     if (location) {
       return res.status(409).jsend.error({
-        message: 'Location already exists, use a different name',
+        message: 'Location already exists',
       });
     }
 
     // create Location record in collection
     await Locations.create({
       name: name,
-      phoneNumber: phoneNumber,
-      password: password,
+      male: male,
+      female: female,
+      total: Number(male) + Number(female)
     });
 
     // return success response
@@ -30,6 +31,7 @@ export default class LocationController {
       name: name,
       male: male,
       female: female,
+      total: String(Number(male) + Number(female))
     });
   }
 
@@ -45,24 +47,47 @@ export default class LocationController {
   async updateLocation(req, res) {
     const { params: { locationId } } = req;
     const { body: { name, male, female } } = req;
-    const location = await Locations.findOne({ name: name });
+    const location = await Locations.findOne({ _id: locationId });
+
+    if (!location) {
+      return res.status(404).jsend.error({
+        message: 'Location ID provided doesnt map to any location',
+      });
+    }
 
     // update Location record from the collection
-    // await Locations.remove({ _id: location._id });
+    if (name) {
+      location.name = name;
+    }
+    if (male) {
+      location.male = male;
+      location.total = male + location.female;
+    }
+    if (female) {
+      location.female = female;
+      location.total = female + location.male;1
+    }
+    await location.save();
 
     // return success response
     return res.status(200).jsend.success({
-      message: 'Successfully update location',
+      message: 'Successfully updated location',
       location
     });
   }
 
   async deleteLocation(req, res) {
-    const { params: { name } } = req;
-    const location = await Locations.findOne({ name: name })
+    const { params: { locationId } } = req;
+
+    const location = await Locations.findOne({ _id: locationId});
+    if (!location) {
+      return res.status(404).jsend.error({
+        message: 'Location does not exist',
+      });
+    }
 
     // remove Location record from the collection
-    await Locations.remove({ _id: location._id });
+    await Locations.deleteOne({ _id: locationId });
 
     // return success response
     return res.status(200).jsend.success({
