@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const { ObjectId } = mongoose.Schema.Types;
+
 /**
  * Schema for the Location collection
  */
@@ -17,6 +19,9 @@ const LocationSchema = new mongoose.Schema({
   total: {
     type: Number,
     required: true,
+  },
+  parentLocation: {
+    type: ObjectId
   }
 });
 

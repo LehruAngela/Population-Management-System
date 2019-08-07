@@ -11,7 +11,7 @@ export default class UserController {
     // check if contact already exists in the database
     const user = await User.findOne({ email: email })
     if (user) {
-      return res.status(201).jsend.success({
+      return res.status(409).jsend.success({
         message: 'Email used already exists, please login instead',
       });
     }

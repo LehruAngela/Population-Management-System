@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "DEBUG=log nodemon --exec babel-node src/index.js",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "test": "test",
+    "test": "NODE_ENV=testing mocha --require @babel/register tests/**/*.js --timeout=10000 --exit",
     "lint": "eslint src/js"
   },
   "repository": {
@@ -21,8 +21,12 @@
   "homepage": "https://github.com/LehruAngela/SMS-Management-API#readme",
   "dependencies": {
     "@babel/cli": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/runtime": "^7.0.0-beta.55",
+    "babel-plugin-transform-runtime": "^7.0.0-beta.3",
     "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "jsend": "^1.1.0",
@@ -31,7 +35,11 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "babel-polyfill": "^6.26.0",
+    "chai": "^4.2.0",
     "eslint": "^6.1.0",
+    "mocha": "^6.2.0",
     "mongoose": "^5.6.7",
     "nodemon": "^1.19.1",
     "rimraf": "^2.6.3"

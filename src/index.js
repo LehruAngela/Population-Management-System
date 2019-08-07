@@ -3,7 +3,11 @@ import routes from './routes';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import jsend from 'jsend';
+import config from './config';
 require('dotenv').config();
+
+const ENV = process.env.NODE_ENV;
+const STAGE = config[ENV];
 
 const app = new Express();
 
@@ -20,15 +24,15 @@ app.use(jsend.middleware);
  */
 app.use('/api/v1', routes);
 
-app.listen(8001, () => {
-  console.log('Population Management System listening on port: http://localhost:8001');
+app.listen(STAGE.PORT, () => {
+  console.log(`Population Management System listening on port: http://localhost:${STAGE.PORT}`);
 });
 
 /**
  * Create a connection to the database.
  */
 mongoose.connect(
-  'mongodb://localhost/population-system',
+  STAGE.DATABASE_URL,
   { useNewUrlParser: true, useCreateIndex: true }
 );
 
