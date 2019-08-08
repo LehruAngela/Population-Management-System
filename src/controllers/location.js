@@ -28,7 +28,7 @@ export default class LocationController {
     if (parentLocation) {
       const parentLocations = await Locations.findOne({ name: parentLocation })
       if (!parentLocations) {
-        return res.status(409).jsend.error({
+        return res.status(404).jsend.error({
           message: 'Parent location does not exist',
         });
       }
@@ -41,7 +41,7 @@ export default class LocationController {
     // return success response
     return res.status(201).jsend.success({
       message: 'Successfully created location',
-      locationObject
+      location: locationObject
     });
   }
 
