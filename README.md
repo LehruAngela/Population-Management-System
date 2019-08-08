@@ -41,35 +41,35 @@ npm test
 ### POST /api/v1/signup
 ```
 {
-    "username": "TestUser",
-	"email": "testuser@gmail.com",
-	"password": "1...."
+"username": "TestUser",
+"email": "testuser@gmail.com",
+"password": "1...."
 }
 ```
 
 ### POST /api/v1/login
 ```
 { 
-    "email": "testuser@gmail.com",
-	"password": "1...."
+"email": "testuser@gmail.com",
+"password": "1...."
 }
 ```
 
 ### POST /api/v1/location
 ```
 {
-    "name": "Area1",
+"name": "Area1",
 "male": "40",
 "female": "40",
-	"parentLocation": "Area2" (optional)
+"parentLocation": "Area2" (optional)
 }
 ```
 
 ### PUT api/v1/location/:locationId/
 ```
 {
-    "name": "Area1",
-	"male": "40",
-	"female": "50"
+"name": "Area1",
+"male": "40",
+"female": "50"
 }
 ```
