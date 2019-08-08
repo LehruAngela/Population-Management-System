@@ -59,8 +59,8 @@ npm test
 ```
 {
     "name": "Area1",
-	"male": "40",
-	"female": "40"
+"male": "40",
+"female": "40",
 	"parentLocation": "Area2" (optional)
 }
 ```
